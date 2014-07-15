@@ -28,23 +28,60 @@ int sensorValue5 = 0;
 
 void setup() {
   // initialize serial communications at 9600 bps:
-  Serial.begin(9600); 
+  Serial.begin(9600);
+  pinMode(10, OUTPUT);
+  pinMode(16, OUTPUT);
+  pinMode(14, OUTPUT);
+  pinMode(15, OUTPUT);
+  
+  digitalWrite(10, HIGH);   // red
+  digitalWrite(16, LOW);    // ground
+  digitalWrite(14, HIGH);   // green
+  digitalWrite(15, LOW);   // blue
 }
 
 void loop() {
+  
   // read the analog in value:
   sensorValue0 = analogRead(A0);
   sensorValue1 = analogRead(A1);
   sensorValue2 = analogRead(A2);
   sensorValue3 = analogRead(A3);
-  sensorValue4 = analogRead(A4);
-  sensorValue5 = analogRead(A5);
+  //sensorValue4 = analogRead(A4);
+  //sensorValue5 = analogRead(A5);
+  
+  if ((sensorValue0 + sensorValue1 + sensorValue2 + sensorValue3) < 16)
+  {
+    digitalWrite(10, LOW);   // red
+    digitalWrite(16, LOW);    // ground
+    digitalWrite(14, LOW);   // green
+    digitalWrite(15, HIGH);   // blue
+  }else if ((sensorValue0 + sensorValue1 + sensorValue2 + sensorValue3) < 2)
+  {
+    digitalWrite(10, HIGH);   // red
+    digitalWrite(16, LOW);    // ground
+    digitalWrite(14, LOW);   // green
+    digitalWrite(15, HIGH);   // blue
+  }else if ((sensorValue0 + sensorValue1 + sensorValue2 + sensorValue3) > 200)
+  {
+    digitalWrite(10, HIGH);   // red
+    digitalWrite(16, LOW);    // ground
+    digitalWrite(14, HIGH);   // green
+    digitalWrite(15, LOW);   // blue
+  }else if ((sensorValue0 + sensorValue1 + sensorValue2 + sensorValue3) > 400)
+  {
+    digitalWrite(10, LOW);   // red
+    digitalWrite(16, LOW);    // ground
+    digitalWrite(14, LOW);   // green
+    digitalWrite(15, LOW);   // blue
+  }  
+  
                
   Serial.print(sensorValue0);Serial.print(',');
   Serial.print(sensorValue1);Serial.print(',');
   Serial.print(sensorValue2);Serial.print(',');
-  Serial.print(sensorValue3);Serial.print(',');
-  Serial.print(sensorValue4);Serial.print(',');
-  Serial.println(sensorValue5);
+  Serial.println(sensorValue3);//Serial.print(',');
+  //Serial.print(sensorValue4);Serial.print(',');
+  //Serial.println(sensorValue5);
   delay(1100);                     
 }
