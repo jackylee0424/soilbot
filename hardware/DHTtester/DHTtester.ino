@@ -4,7 +4,7 @@
 
 #include "DHT.h"
 
-#define DHTPIN 2     // what pin we're connected to
+#define DHTPIN 6     // what pin we're connected to
 
 // Uncomment whatever type you're using!
 //#define DHTTYPE DHT11   // DHT 11 
@@ -32,7 +32,9 @@ DHT dht(DHTPIN, DHTTYPE);
 void setup() {
   Serial.begin(9600); 
   Serial.println("DHTxx test!");
- 
+  digitalWrite(7, HIGH); 
+  digitalWrite(5, LOW); 
+  digitalWrite(4, LOW); 
   dht.begin();
 }
 
